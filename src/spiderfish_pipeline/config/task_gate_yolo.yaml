@@ -1,0 +1,13 @@
+/spiderfish/pipeline_manager:
+  ros__parameters:
+    pipeline:
+      components:
+        - spiderfish_object_recognition::ObjectRecognizer
+      pkg_names: 
+        - spiderfish_object_recognition
+      param_files:
+        - tiny_yolov4_pipeline.yaml
+      namespace: /spiderfish
+      remap_rules:
+        - /spiderfish/object_recognizer/in:=/spiderfish/drivers/front_camera/image_raw
+    use_sim_time: false

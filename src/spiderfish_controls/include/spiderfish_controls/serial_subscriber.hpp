@@ -1,0 +1,31 @@
+#ifndef SPIDERFISH_CONTROL__SERIAL_SUBSCRIBER 
+#include "std_msgs/msg/u_int32.hpp"
+
+#include "rclcpp/rclcpp.hpp"
+namespace spiderfish_controls
+{      
+
+    class SerialSubscriber : public rclcpp::Node
+    {
+
+    public:
+
+        /** Constructor
+         * 
+         * @param options ros2 node options.
+         */
+        explicit SerialSubscriber(const rclcpp::NodeOptions & options);
+        ~SerialSubscriber();
+
+    private:
+        void controlCallback(const std_msgs::msg::UInt32::SharedPtr msg) const;
+        rclcpp::Subscription<std_msgs::msg::UInt32>::SharedPtr thruster_sub_; 
+        int fd_;
+    };
+    
+} // namespace spiderfish_controls
+
+#include "rclcpp_components/register_node_macro.hpp"
+RCLCPP_COMPONENTS_REGISTER_NODE(spiderfish_controls::SerialSubscriber)
+
+#endif  //SPIDERFISH_CONTROL__SERIAL_SUBSCRIBER

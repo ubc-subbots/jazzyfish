@@ -1,0 +1,17 @@
+/spiderfish/pipeline_manager:
+  ros__parameters:
+    pipeline:
+      components:
+        - spiderfish_example::ComponentOne
+        - spiderfish_example::ComponentTwo
+      pkg_names: 
+        - spiderfish_example
+        - spiderfish_example
+      param_files:
+        - ''
+        - params_two.yaml
+      namespace: /spiderfish
+      remap_rules:
+        - /spiderfish/example/component_two/in:=/spiderfish/example/component_one/out
+    use_sim_time: false
+

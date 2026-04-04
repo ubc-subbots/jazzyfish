@@ -1,0 +1,9 @@
+pipeline_manager:
+  ros__parameters:
+    pipeline:
+      components:
+        - spiderfish_controls::WaypointMarker
+      pkg_names:
+        - spiderfish_controls
+      namespace: /spiderfish/waypoint
+    use_sim_time: false

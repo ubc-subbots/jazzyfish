@@ -1,0 +1,11 @@
+/spiderfish/pipeline_manager:
+  ros__parameters:
+    pipeline:
+      components:
+        - spiderfish_gate::GateDetector
+      pkg_names: 
+        - spiderfish_gate
+      param_files:
+        - ''
+      namespace: /spiderfish
+    use_sim_time: false
