@@ -7,6 +7,8 @@
   <maintainer email="logan@todo.todo">logan</maintainer>
   <license>TODO: License declaration</license>
 
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  
   <depend>action_msgs</depend>
   <depend>rclpy</depend>
   <depend>composition_interfaces</depend>

@@ -4,28 +4,7 @@ from rclpy.node import Node
 from spiderfish_interfaces.msg import Waypoint
 from std_msgs.msg import String
 import math
-
-def quaternion_from_euler(roll, pitch, yaw):
-    # https://gist.github.com/salmagro/2e698ad4fbf9dae40244769c5ab74434
-    """
-    Converts euler roll, pitch, yaw to quaternion (w in last place)
-    quat = [w, x, y, z]
-    Bellow should be replaced when porting for ROS 2 Python tf_conversions is done.
-    """
-    cy = math.cos(yaw * 0.5)
-    sy = math.sin(yaw * 0.5)
-    cp = math.cos(pitch * 0.5)
-    sp = math.sin(pitch * 0.5)
-    cr = math.cos(roll * 0.5)
-    sr = math.sin(roll * 0.5)
-
-    q = [0] * 4
-    q[0] = cy * cp * cr + sy * sp * sr
-    q[1] = cy * cp * sr - sy * sp * cr
-    q[2] = sy * cp * sr + cy * sp * cr
-    q[3] = sy * cp * cr - cy * sp * sr
-
-    return q
+from tf_transformations import quaternion_from_euler
 
 STABILIZE = 0
 PASSTHROUGH = 1
@@ -161,14 +140,14 @@ class PredeterminedRoute(Node):
         for tp in target_poses:
             pose_q = quaternion_from_euler(tp['pose']['orientation_rpy']['r'], tp['pose']['orientation_rpy']['p'], tp['pose']['orientation_rpy']['y'])
             dist_q = quaternion_from_euler(tp['distance']['orientation_rpy']['r'], tp['distance']['orientation_rpy']['p'], tp['distance']['orientation_rpy']['y'])
-            tp['pose']['orientation']['x'] = pose_q[1]
-            tp['pose']['orientation']['y'] = pose_q[2]
-            tp['pose']['orientation']['z'] = pose_q[3]
-            tp['pose']['orientation']['w'] = pose_q[0]
-            tp['distance']['orientation']['x'] = abs(dist_q[1])
-            tp['distance']['orientation']['y'] = abs(dist_q[2])
-            tp['distance']['orientation']['z'] = abs(dist_q[3])
-            tp['distance']['orientation']['w'] = abs(dist_q[0])
+            tp['pose']['orientation']['x'] = pose_q[0]
+            tp['pose']['orientation']['y'] = pose_q[1]
+            tp['pose']['orientation']['z'] = pose_q[2]
+            tp['pose']['orientation']['w'] = pose_q[3]
+            tp['distance']['orientation']['x'] = abs(dist_q[0])
+            tp['distance']['orientation']['y'] = abs(dist_q[1])
+            tp['distance']['orientation']['z'] = abs(dist_q[2])
+            tp['distance']['orientation']['w'] = abs(dist_q[3])
             self.get_logger().info(str(pose_q))
             self.get_logger().info(str(dist_q))
 

@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:24.04
 # Standard updating and installing required packages
 RUN  apt-get update -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -14,7 +14,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     tzdata \
     xorg \
     neovim \
-    vim && \
+    vim \
+    nano \
+    libopencv-dev \
+    python3-opencv \
+    && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

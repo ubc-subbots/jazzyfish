@@ -6,9 +6,9 @@ if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
 endif()
 
-# Default to C++14
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -24,7 +24,7 @@ find_package(std_msgs REQUIRED)
 find_package(spiderfish_interfaces REQUIRED)
 find_package(tf2 REQUIRED)
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include)
 
 # uncomment the following section in order to fill in
 # further dependencies manually.

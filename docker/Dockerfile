@@ -1,4 +1,4 @@
-FROM ros:foxy
+FROM ros:jazzy
 
 # setup spiderfish
 RUN mkdir -p /subbots

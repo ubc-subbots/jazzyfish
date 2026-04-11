@@ -1,4 +1,3 @@
-from http.server import executable
 from launch import LaunchDescription
 from launch_ros.actions import Node, ComposableNodeContainer
 from launch.actions import IncludeLaunchDescription, TimerAction

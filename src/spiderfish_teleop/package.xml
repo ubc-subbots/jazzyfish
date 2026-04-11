@@ -6,6 +6,8 @@
   <description>TODO: Package description</description>
   <maintainer email="logan.fillo@gmail.com">logan</maintainer>
   <license>TODO: License declaration</license>
+  
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>pynput-pip</depend>
   <depend>spiderfish_interfaces</depend>
