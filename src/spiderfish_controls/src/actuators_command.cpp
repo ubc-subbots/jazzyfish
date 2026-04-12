@@ -66,7 +66,7 @@ namespace spiderfish_controls
   void ActuatorsCommand::sendOverSerial(const std::shared_ptr<spiderfish_interfaces::srv::ActuatorsCommand::Request> request,
           std::shared_ptr<spiderfish_interfaces::srv::ActuatorsCommand::Response>      response) {
             if (nameToPin.find(request->input) == nameToPin.end()) {
-              RCLCPP_ERROR(this->get_logger(), request->input + " is not configured in spiderfish_controls actuators_config.yaml!");
+              RCLCPP_ERROR(this->get_logger(), "%s is not configured in spiderfish_controls actuators_config.yaml!", request->input.c_str());
               return;
             }
 
@@ -78,7 +78,7 @@ namespace spiderfish_controls
               response->succeeded = true;
               returnMessage+="successful";
             }
-            RCLCPP_INFO(this->get_logger(), returnMessage);
+            RCLCPP_INFO(this->get_logger(), "%s", returnMessage.c_str());
           }
 
 } // namespace spiderfish_controls

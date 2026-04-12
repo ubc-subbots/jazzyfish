@@ -145,7 +145,7 @@ void GateDetector::boundGateUsingPoles(std::vector<std::vector<Point>> hulls, cv
     // this however, the model method did not perform as well as this method and needs works
     //float thresh = 0.03;
     //float desired_ratio = 0.11;
-    //RCLCPP_INFO(this->get_logger(), "Aspect ratio " + std::to_string(aspect_ratio));
+    //RCLCPP_INFO(this->get_logger(), "Aspect ratio %s", std::to_string(aspect_ratio));
     //if (aspect_ratio > desired_ratio - thresh && aspect_ratio < desired_ratio + thresh)
     if (aspect_ratio < 1) // If taller than wide
     {

@@ -226,7 +226,7 @@ namespace spiderfish_gazebo
         underwater_image_pub_.publish(message);
 
         auto runtime = this->get_clock()->now() - timer;
-        RCLCPP_INFO(this->get_logger(),"Processing took: "+ std::to_string(runtime.seconds()) + "s");
+        RCLCPP_INFO(this->get_logger(),"Processing took: %ss", std::to_string(runtime.seconds()));
     }
 
 } // namespace spiderfish_gazebo
