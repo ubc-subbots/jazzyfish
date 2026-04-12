@@ -4,7 +4,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "image_transport/image_transport.hpp"
 #include "std_msgs/msg/string.hpp"
-#include "cv_bridge/cv_bridge.h"
+#include "cv_bridge/cv_bridge.hpp"
 #include "sensor_msgs/image_encodings.hpp"
 #include "spiderfish_interfaces/msg/detection_box_array.hpp"
 #include "spiderfish_interfaces/srv/object_detection.hpp"

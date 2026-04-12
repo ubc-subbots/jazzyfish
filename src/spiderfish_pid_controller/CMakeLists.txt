@@ -16,13 +16,14 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
+find_package(ament_index_cpp REQUIRED)
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(spiderfish_interfaces REQUIRED)
-find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 include_directories(include)
 
@@ -40,7 +41,7 @@ target_include_directories(spiderfish_pid_controller PUBLIC
 install(TARGETS spiderfish_pid_controller
   DESTINATION lib/${PROJECT_NAME})
 
-ament_target_dependencies(spiderfish_pid_controller rclcpp rclcpp_components sensor_msgs  std_msgs spiderfish_interfaces tf2)
+ament_target_dependencies(spiderfish_pid_controller rclcpp rclcpp_components sensor_msgs  std_msgs spiderfish_interfaces tf2_geometry_msgs ament_index_cpp)
 
 install(DIRECTORY
   launch

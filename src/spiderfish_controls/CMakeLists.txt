@@ -26,7 +26,7 @@ find_package(geometry_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(OpenCV 4.2 REQUIRED)
-find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 include_directories(include)
 
@@ -80,7 +80,7 @@ ament_target_dependencies(
   waypoint_marker
   "rclcpp"
   "rclcpp_components"
-  "tf2"
+  "tf2_geometry_msgs"
   "spiderfish_interfaces"
   "geometry_msgs"
   "sensor_msgs"
@@ -94,7 +94,7 @@ ament_target_dependencies(
   trajectory_generator
   "rclcpp"
   "rclcpp_components"
-  "tf2"
+  "tf2_geometry_msgs"
   "spiderfish_interfaces"
   "geometry_msgs"
   "sensor_msgs"
@@ -138,7 +138,7 @@ ament_target_dependencies(spiderfish_controls
   "geometry_msgs"
   "sensor_msgs"
   "OpenCV"
-  "tf2"
+  "tf2_geometry_msgs"
   "nav_msgs"
 )
 

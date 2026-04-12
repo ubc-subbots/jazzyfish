@@ -6,7 +6,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "rclcpp/time.hpp"
 #include "image_transport/image_transport.hpp"
-#include "cv_bridge/cv_bridge.h"
+#include "cv_bridge/cv_bridge.hpp"
 #include "sensor_msgs/image_encodings.hpp"
 #include "std_msgs/msg/float32_multi_array.hpp"
 #include "spiderfish_gate/pole_featurizer.hpp"

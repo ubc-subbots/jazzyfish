@@ -59,6 +59,7 @@ ament_target_dependencies(spiderfish_object_recognition
   image_transport
   OpenCV
   Boost
+  ament_index_cpp
 )
 
 # Install the library and other directories
