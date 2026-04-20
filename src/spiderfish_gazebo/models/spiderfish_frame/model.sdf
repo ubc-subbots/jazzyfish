@@ -1,10 +1,8 @@
 <?xml version='1.0'?>
-<sdf version='1.7'>
+<sdf version='1.9'>
   <model name='spiderfish_frame'>
     <link name='base_link'>
 
-      <!-- pose relaive to STL file origin, was moved to AUV center using Blender -->
-      <!-- Edited for Spiderfish Aug 9 2024-->
       <inertial>
         <mass>13.7</mass>
         <inertia>
@@ -15,10 +13,18 @@
           <iyz> 0.045963196</iyz>
           <izz> 1.077000000</izz>
         </inertia>
-         <pose>0.1 -0.062 -0.00878 0 0 0</pose>
+        <pose>0.1 -0.062 -0.00878 0 0 0</pose>
+
+        <fluid_added_mass>
+          <xx>0.06150147</xx>
+          <yy>0.19301465</yy>
+          <zz>0.32152307</zz>
+          <pp>0.00541858</pp>
+          <qq>0.00303521</qq>
+          <rr>0.00429239</rr>
+        </fluid_added_mass>
       </inertial>
 
-      <!-- Visual Data -->
       <visual name='visual'>
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -37,7 +43,6 @@
 
       <gravity>1</gravity>
 
-      <!-- Collision Data-->
       <collision name='collision'>
         <laser_retro>0</laser_retro>
         <max_contacts>2</max_contacts>
@@ -48,7 +53,6 @@
             <scale>1 1 1</scale>
           </mesh>
         </geometry>
-        <!-- Surface Data consists of default value, we should reseach better numbers-->
         <surface>
           <friction>
             <ode>
@@ -96,10 +100,11 @@
         </surface>
       </collision>
       
-      <sensor type="depth" name="front_camera">
+      <sensor type="depth_camera" name="front_camera">
         <pose>0.45 -0.06 0 0 0 0 </pose>
         <update_rate>60</update_rate>
         <visualize>false</visualize>
+        <topic>/spiderfish/drivers/front_camera/depth/image_raw</topic>
         <camera name="front">
           <horizontal_fov>1.3962634</horizontal_fov>
           <image>
@@ -117,25 +122,13 @@
             <stddev>0.007</stddev>
           </noise>
         </camera>
-        <plugin name="front_camera" filename="libgazebo_ros_camera.so">
-          <ros>
-            <namespace>/spiderfish/drivers</namespace>
-            <remapping>custom_camera/image_raw:=front_camera/image_raw</remapping>
-            <remapping>custom_camera/depth/image_raw:=front_camera/depth/image_raw</remapping>
-          </ros>
-
-          <publish_camera_info>true</publish_camera_info>
-
-          <frame_name>camera_link_optical</frame_name>
-
-          <min_depth>0.1</min_depth>
-          <max_depth>100.0</max_depth>
-        </plugin>
       </sensor>
+
       <sensor type="camera" name="down_camera">
         <pose>0.4 -0.06 0 0 1.57 0</pose>
         <update_rate>60</update_rate>
         <visualize>false</visualize>
+        <topic>/spiderfish/drivers/down_camera/image_raw</topic>
         <camera name="down">
           <horizontal_fov>1.3962634</horizontal_fov>
           <image>
@@ -153,35 +146,14 @@
             <stddev>0.007</stddev>
           </noise>
         </camera>
-        <plugin name="down_camera" filename="libgazebo_ros_camera.so">
-          <!-- <bodyName>camera_link</bodyName> -->
-          <ros>
-            <namespace>/spiderfish/drivers</namespace>
-          </ros>
-        </plugin>
       </sensor>
+
       <sensor name="imu_sensor" type="imu">
         <always_on>true</always_on>
         <update_rate>300</update_rate>
         <visualize>true</visualize>
-        <topic>imu</topic>
+        <topic>/spiderfish/drivers/imu</topic>
         <gravity>true</gravity>
-        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu">
-          <topicName>imu</topicName>
-          <bodyName>imu_link</bodyName>
-          <updateRateHZ>200</updateRateHZ>
-          <gaussianNoise>0.001</gaussianNoise>
-          <xyzOffset>0 0 0</xyzOffset>
-          <rpyOffset>0 0 0</rpyOffset>
-          <frameName>base_link</frameName>
-          <linear_acceleration_covariance>0.005 0.005 0.005 0.005 0.005 0.005 0.005 0.005 0.005</linear_acceleration_covariance>
-          <angular_velocity_covariance>0.005 0.005 0.005 0.005 0.005 0.005 0.005 0.005 0.005</angular_velocity_covariance>
-          <orientation_covariance>0.005 0.005 0.005 0.005 0.005 0.005 0.005 0.005 0.005</orientation_covariance>
-          <initialOrientationAsReference>false</initialOrientationAsReference>
-          <ros>
-            <namespace>/spiderfish/drivers</namespace>
-          </ros>
-        </plugin>
         <pose>0 0 0 0 0 0</pose>
       </sensor>
     </link>

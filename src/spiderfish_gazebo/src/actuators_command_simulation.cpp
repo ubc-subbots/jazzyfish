@@ -1,8 +1,10 @@
 #include "spiderfish_gazebo/actuators_command_simulation.hpp"
-#include "gazebo_msgs/srv/spawn_entity.hpp"
+#include "ros_gz_interfaces/srv/spawn_entity.hpp"
 #include <ament_index_cpp/get_package_share_directory.hpp>
 #include <fstream>
 #include <cstdlib>
+#include <string>
+
 using std::placeholders::_1;
 
 namespace spiderfish_gazebo
@@ -22,11 +24,11 @@ namespace spiderfish_gazebo
       action_map_["torpedo"] = std::bind(&ActuatorsCommandSimulation::handleTorpedo, this, std::placeholders::_1);
       action_map_["claw"] = std::bind(&ActuatorsCommandSimulation::handleClaw, this, std::placeholders::_1);
 
-      // connect to gazebo spawning service
-      spawner_client_ = this->create_client<gazebo_msgs::srv::SpawnEntity>("/spawn_entity");
+      // connect to ros_gz_sim spawning service
+      spawner_client_ = this->create_client<ros_gz_interfaces::srv::SpawnEntity>("/spawn_entity");
       while (!spawner_client_->wait_for_service(std::chrono::seconds(1))) {
           if (!rclcpp::ok()) {
-              RCLCPP_ERROR(spawner_node_->get_logger(), "Interrupted while waiting for the service. Exiting.");
+              RCLCPP_ERROR(this->get_logger(), "Interrupted while waiting for the service. Exiting.");
               return;
           }
       }
@@ -52,15 +54,16 @@ namespace spiderfish_gazebo
       
       /////////////////////////////////////////////////////FOR DEMO PURPOSES////////////////////////////////////////////////////
       // load SDF content from a file
-      auto request = std::make_shared<gazebo_msgs::srv::SpawnEntity::Request>();
+      auto request = std::make_shared<ros_gz_interfaces::srv::SpawnEntity::Request>();
       std::ifstream sdf_file(ament_index_cpp::get_package_share_directory("spiderfish_gazebo") + "/gazebo/models/spiderfish_thruster/model.sdf");
       std::string sdf_content((std::istreambuf_iterator<char>(sdf_file)), std::istreambuf_iterator<char>());
-      request->xml = sdf_content;
-      request->name = rand() % 100;
-      request->robot_namespace = "spiderfish_gazebo"; 
-      request->initial_pose.position.x = 0.0;
-      request->initial_pose.position.y = 0.0;
-      request->initial_pose.position.z = rand() % 2 - 4.0;
+      
+      request->entity_factory.sdf = sdf_content;
+      request->entity_factory.name = "torpedo_" + std::to_string(rand() % 100);
+      request->entity_factory.allow_renaming = true;
+      request->entity_factory.pose.position.x = 0.0;
+      request->entity_factory.pose.position.y = 0.0;
+      request->entity_factory.pose.position.z = (rand() % 2) - 4.0;
 
       // send request
       auto result = spawner_client_->async_send_request(request);

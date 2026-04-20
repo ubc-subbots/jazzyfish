@@ -1,9 +1,12 @@
 #ifndef SPIDERFISH_CONTROL__ACTUATORS_COMMAND_SIMULATION
+#define SPIDERFISH_CONTROL__ACTUATORS_COMMAND_SIMULATION
+
 #include "std_msgs/msg/u_int32.hpp"
 #include "spiderfish_interfaces/srv/actuators_command.hpp"
-#include "gazebo_msgs/srv/spawn_entity.hpp"
+#include "ros_gz_interfaces/srv/spawn_entity.hpp"
 
 #include "rclcpp/rclcpp.hpp"
+
 namespace spiderfish_gazebo
 {      
 
@@ -13,8 +16,7 @@ namespace spiderfish_gazebo
     public:
 
         /** Constructor
-         * 
-         * @param options ros2 node options.
+         * * @param options ros2 node options.
          */
         explicit ActuatorsCommandSimulation(const rclcpp::NodeOptions & options);
         ~ActuatorsCommandSimulation();
@@ -24,7 +26,7 @@ namespace spiderfish_gazebo
         rclcpp::Service<spiderfish_interfaces::srv::ActuatorsCommand>::SharedPtr service_;
         
         rclcpp::Node::SharedPtr spawner_node_;
-        std::shared_ptr<rclcpp::Client<gazebo_msgs::srv::SpawnEntity>> spawner_client_;
+        std::shared_ptr<rclcpp::Client<ros_gz_interfaces::srv::SpawnEntity>> spawner_client_;
 
         void handleRequest(const std::shared_ptr<spiderfish_interfaces::srv::ActuatorsCommand::Request> request,
           std::shared_ptr<spiderfish_interfaces::srv::ActuatorsCommand::Response>      response);

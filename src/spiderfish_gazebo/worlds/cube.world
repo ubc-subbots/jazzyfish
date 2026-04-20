@@ -5,9 +5,6 @@
       <uri>model://cube_auv</uri>
     </include>
     <!-- A ground plane -->
-    <include>
-      <uri>model://ground_plane</uri>
-    </include>
     <grid>0</grid>
   </world>
 </sdf>
