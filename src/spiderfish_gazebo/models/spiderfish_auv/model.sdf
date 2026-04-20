@@ -40,116 +40,135 @@
     <include>
       <uri>model://spiderfish_thruster</uri>
       <pose>-0.355 -0.07 0 1.57 1.57 0</pose>
-      <pose>0 0 0 0 0 0</pose>
       <name>thruster6</name>
     </include>
 
-
-
-
-
-
-
-    <base_link>base_link::base_link</base_link>
-    <neutrally_buoyant>1</neutrally_buoyant>
-    <volume>0.01334</volume>
-    <center_of_buoyancy>0.1 -0.062 -0.0</center_of_buoyancy>
-    <plugin
+    <!-- <plugin
       filename="gz-sim-hydrodynamics-system"
       name="gz::sim::systems::Hydrodynamics">
       <link_name>base_link</link_name>
       
-      <xU>-0.2229119791</xU>
-      <yV>-1.105547605</yV>
-      <zW>-0.2472084207</zW>
-      <kP>-0.02229119791</kP>
-      <mQ>-0.1105547605</mQ>
-      <nR>-0.02472084207</nR>
+      <xU>0.2229119791</xU>
+      <yV>1.105547605</yV>
+      <zW>0.2472084207</zW>
+      <kP>0.02229119791</kP>
+      <mQ>0.1105547605</mQ>
+      <nR>0.02472084207</nR>
 
-      <xUabsU>-59.75066625</xUabsU>
-      <yVabsV>-71.13459739</yVabsV>
-      <zWabsW>-67.099009</zWabsW>
-      <kPabsP>-5.975066625</kPabsP>
-      <mQabsQ>-7.113459739</mQabsQ>
-      <nRabsR>-6.7099009</nRabsR>
-    </plugin>
+      <xUabsU>59.75066625</xUabsU>
+      <yVabsV>71.13459739</yVabsV>
+      <zWabsW>67.099009</zWabsW>
+      <kPabsP>5.975066625</kPabsP>
+      <mQabsQ>7.113459739</mQabsQ>
+      <nRabsR>6.7099009</nRabsR>
+    </plugin> -->
 
-    <joint name='frame_thruster1' type='revolute'>
+    <joint name='frame_thruster1' type='fixed'>
       <parent>base_link::base_link</parent>
       <child>thruster1::thruster</child>
       <pose>0 0 0 0 0 0</pose>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
     </joint>
 
-    <joint name='frame_thruster2' type='revolute'>
+    <joint name='frame_thruster2' type='fixed'>
       <parent>base_link::base_link</parent>
       <child>thruster2::thruster</child>
       <pose>0 0 0 0 0 0</pose>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
     </joint>
 
-    <joint name='frame_thruster3' type='revolute'>
+    <joint name='frame_thruster3' type='fixed'>
       <parent>base_link::base_link</parent>
       <child>thruster3::thruster</child>
       <pose>0 0 0 0 0 0</pose>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
     </joint>
 
-    <joint name='frame_thruster4' type='revolute'>
+    <joint name='frame_thruster4' type='fixed'>
       <parent>base_link::base_link</parent>
       <child>thruster4::thruster</child>
       <pose>0 0 0 0 0 0</pose>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
     </joint>
 
-    <joint name='frame_thruster5' type='revolute'>
+    <joint name='frame_thruster5' type='fixed'>
       <parent>base_link::base_link</parent>
       <child>thruster5::thruster</child>
       <pose>0 0 0 0 0 0</pose>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
     </joint>
 
-    <joint name='frame_thruster6' type='revolute'>
+    <joint name='frame_thruster6' type='fixed'>
       <parent>base_link::base_link</parent>
       <child>thruster6::thruster</child>
       <pose>0 0 0 0 0 0</pose>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>0</lower>
-          <upper>0</upper>
-        </limit>
-      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </limit>
+          <suspension>
+            <cfm>0</cfm>
+            <erp>0.2</erp>
+          </suspension>
+        </ode>
+      </physics>
     </joint>
 
     <plugin name="spiderfish_gazebo::ThrusterDriver" filename="libthruster_driver_plugin.so">

@@ -15,14 +15,14 @@
         </inertia>
         <pose>0.1 -0.062 -0.00878 0 0 0</pose>
 
-        <fluid_added_mass>
-          <xx>0.06150147</xx>
-          <yy>0.19301465</yy>
-          <zz>0.32152307</zz>
-          <pp>0.00541858</pp>
-          <qq>0.00303521</qq>
-          <rr>0.00429239</rr>
-        </fluid_added_mass>
+        <!-- <fluid_added_mass>
+          <xx>6.150</xx>
+          <yy>19.301</yy>
+          <zz>32.152</zz>
+          <pp>0.542</pp>
+          <qq>0.304</qq>
+          <rr>0.429</rr>
+        </fluid_added_mass> -->
       </inertial>
 
       <visual name='visual'>

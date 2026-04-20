@@ -28,11 +28,11 @@ def generate_launch_description():
         )
     )
 
-    controller_teleop = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(get_package_share_directory('spiderfish_teleop'), 'launch', 'controller_teleop_launch.py')
-        )
-    )
+    # controller_teleop = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(
+    #         os.path.join(get_package_share_directory('spiderfish_teleop'), 'launch', 'controller_teleop_launch.py')
+    #     )
+    # )
     
     actuators_simulation = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -43,7 +43,7 @@ def generate_launch_description():
     ld.add_action(gazebo)
     ld.add_action(thrust_allocator)
     ld.add_action(keyboard_teleop)
-    ld.add_action(controller_teleop)
+    # ld.add_action(controller_teleop)
     ld.add_action(actuators_simulation)
 
     return ld
