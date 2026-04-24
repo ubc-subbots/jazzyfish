@@ -3,10 +3,14 @@
 
 #include <functional>
 #include <vector>
+#include <memory>
 
-#include <gazebo/gazebo.hh>
-#include <gazebo/physics/physics.hh>
-#include <gazebo/common/common.hh>
+#include <gz/sim/System.hh>
+#include <gz/sim/Model.hh>
+#include <gz/sim/Link.hh>
+#include <gz/math/Vector3.hh>
+#include <gz/plugin/Register.hh>
+#include <sdf/Element.hh>
 
 #include "include/gazebo_utils.hpp"
 #include "include/math_utils.hpp"
@@ -14,94 +18,50 @@
 namespace spiderfish_gazebo 
 {
 
-    class HydrodynamicsPlugin : public gazebo::ModelPlugin
+    class HydrodynamicsPlugin : 
+        public gz::sim::System,
+        public gz::sim::ISystemConfigure,
+        public gz::sim::ISystemPreUpdate
     {
 
     public:
         
-        /// @brief Constructor
-        HydrodynamicsPlugin ();
+        HydrodynamicsPlugin();
 
-        /// @brief Destructor
-        ~HydrodynamicsPlugin ();
+        ~HydrodynamicsPlugin() override = default;
 
     protected:
 
-        /** 
-         * @brief Load function called by Gazebo to initialize the plugin.
-         * 
-         */
-        void Load(gazebo::physics::ModelPtr model, sdf::ElementPtr sdf) override;
+        void Configure(const gz::sim::Entity &_entity,
+                       const std::shared_ptr<const sdf::Element> &_sdf,
+                       gz::sim::EntityComponentManager &_ecm,
+                       gz::sim::EventManager &_eventMgr) override;
 
-        /**
-         * @brief We need to assemble the standard robotics equation of motion for the AUV
-         * on each iteration. This can be done by gathering velocity and acceleration data
-         * and using SDF parameters to approximate the hydrodynamic and hydrostatic forces
-         */ 
-        virtual void Update();
+        void PreUpdate(const gz::sim::UpdateInfo &_info,
+                       gz::sim::EntityComponentManager &_ecm) override;
 
     private:
 
-        /**  
-         * @brief Method to bind the Update function to the Gazebo Simulation update
-         */
-        void Connect(void);
+        bool GetWorldParameters(const std::shared_ptr<const sdf::Element>& world_sdf);
 
-        /**  
-         * @brief Collect parameters specified in the world description (gravity, fluid density)
-         * 
-         * @param world_sdf A pointer to the world description
-         */
-        bool GetWorldParameters(sdf::ElementPtr world_sdf);
+        bool GetModelParameters(const std::shared_ptr<const sdf::Element>& model_sdf);
 
-        /**  
-         * @brief Collect parameters specified in the robot model description
-         */
-        bool GetModelParameters(sdf::ElementPtr model_sdf);
+        Eigen::Vector6d GetVelocityVector(gz::sim::EntityComponentManager &_ecm);
 
-        /**
-         * @brief Get the current 6-dimensional velocity vector from gazebo. 
-         * 
-         * @return A vector containing linear and angular velocity
-         */
-        Eigen::Vector6d GetVelocityVector();
+        Eigen::Vector6d GetAccelerationVector(gz::sim::EntityComponentManager &_ecm);
 
-        /**
-         * @brief Get the current 6-dimensional acceleration vector from gazebo. 
-         * 
-         * @return A vector containing linear and angular acceleration
-         */
-        Eigen::Vector6d GetAccelerationVector();
+        void SetWrenchVector(const Eigen::Vector6d& wrench, gz::sim::EntityComponentManager &_ecm);
 
-        /**
-         * @brief Apply a 6-dimensional wrench to a Gazebo model by dividing components
-         * into linear and angular ignition/math vectors and using Gazebo API to send command
-         */
-        void SetWrenchVector(Eigen::Vector6d wrench);
-
-        /**
-         * @brief Compute Coriolis Matrix
-         */
         void ComputeAddedCoriolisMatrix(const Eigen::Vector6d& _vel, const Eigen::Matrix6d& _Ma, Eigen::Matrix6d &_Ca) const;
 
-        /**
-         * @brief Compute drag matrix using fluid dynamics of AUV model
-         */
         void ComputeDampingMatrix(const Eigen::Vector6d& _vel, Eigen::Matrix6d &_D) const;
 
-        /**
-         * @brief Compute Added mass wrench contributions
-         */
         Eigen::Matrix6d GetAddedMass() const;
 
-        /**
-         * Calculate buoyancy forces 
-         */
-        void ApplyBuoyancyForce(void);
+        void ApplyBuoyancyForce(gz::sim::EntityComponentManager &_ecm);
 
-        gazebo::event::ConnectionPtr updateConnection_;
-        gazebo::physics::LinkPtr frame;
-        gazebo::physics::ModelPtr model;
+        gz::sim::Link link;
+        gz::sim::Model model;
 
         Eigen::Matrix6d added_mass;
         Eigen::Matrix6d coriolis_matrix;
@@ -113,8 +73,9 @@ namespace spiderfish_gazebo
         Eigen::Matrix6d non_linear_damping;
         Eigen::Vector6d quadratic_damping;
 
-        ignition::math::Vector3d rel_CoB;
-        ignition::math::Vector3d gravity;
+        gz::math::Vector3d rel_CoB;
+        gz::math::Vector3d gravity;
+        gz::math::Vector3d com_offset;
 
         double fluid_density;
 
@@ -132,8 +93,11 @@ namespace spiderfish_gazebo
 
     };
 
-} //namespace spiderfish_gazebo
+}
 
-GZ_REGISTER_MODEL_PLUGIN(spiderfish_gazebo::HydrodynamicsPlugin)
+GZ_ADD_PLUGIN(spiderfish_gazebo::HydrodynamicsPlugin,
+              gz::sim::System,
+              spiderfish_gazebo::HydrodynamicsPlugin::ISystemConfigure,
+              spiderfish_gazebo::HydrodynamicsPlugin::ISystemPreUpdate)
 
-#endif //SPIDERFISH_GAZEBO__HYDRODYNAMICS_PLUGIN
+#endif

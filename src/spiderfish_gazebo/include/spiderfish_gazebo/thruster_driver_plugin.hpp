@@ -5,6 +5,7 @@
 #include <string>
 #include <thread>
 #include <memory>
+#include <mutex>
 
 #include <gz/sim/System.hh>
 #include <gz/sim/Entity.hh>
@@ -55,6 +56,7 @@ namespace spiderfish_gazebo
         std::vector<double> thrust_values;
         std::thread spinThread;
         std::string topic_name;
+        std::mutex thrust_mutex;
 
         unsigned int thruster_count;
         

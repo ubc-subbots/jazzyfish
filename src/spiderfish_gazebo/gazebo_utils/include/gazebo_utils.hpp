@@ -1,12 +1,12 @@
 #ifndef SPIDERFISH_GAZEBO__GAZEBO_UTILS
 #define SPIDERFISH_GAZEBO__GAZEBO_UTILS
 
-#include <gazebo/gazebo.hh>
-#include <gazebo/physics/physics.hh>
-#include <gazebo/common/common.hh>
+#include <memory>
+#include <string>
+#include <sdf/Element.hh>
+#include <gz/common/Console.hh>
 
 #include "include/math_utils.hpp"
-
 
 namespace spiderfish_gazebo
 {
@@ -14,14 +14,12 @@ namespace spiderfish_gazebo
     /**
      * @brief Collects a parameter from an sdf description, 
      * assigns a default value if not specified. 
-     * 
-     * @param status    Status indicating if the param was specified
+     * * @param status    Status indicating if the param was specified
      * @param _sdf      A pointer to the model's SDF description
      * @param param     The name of the parameter being located
-     * 
-     */
+     * */
     template <typename parameter>
-    parameter GetSdfElement(bool* status, sdf::ElementPtr _sdf, std::string param, const parameter def=(parameter)NULL)
+    parameter GetSdfElement(bool* status, std::shared_ptr<const sdf::Element> _sdf, std::string param, const parameter def=parameter())
     {
         parameter value = def;
         *status = false;
@@ -38,28 +36,22 @@ namespace spiderfish_gazebo
 
     /**
      * @brief Creates a 6x1 vector from a list of values in an SDF file. 
-     * 
-     * @todo default condition.
-     * 
-     * @param status    Status indicating if the param was specified
+     * * @todo default condition.
+     * * @param status    Status indicating if the param was specified
      * @param _sdf      A pointer to the model's SDF description
      * @param param     The name of the parameter being located
-     * 
-     */
-    Eigen::Vector6d GetSdfVector(bool* status, sdf::ElementPtr _sdf, std::string param, Eigen::Vector6d def=Eigen::Vector6d::Zero());
+     * */
+    Eigen::Vector6d GetSdfVector(bool* status, std::shared_ptr<const sdf::Element> _sdf, std::string param, Eigen::Vector6d def=Eigen::Vector6d::Zero());
 
 
     /**
      * @brief Creates a 6x6 matrix from a list of values in an SDF file. 
-     * 
-     * @todo defaul condition.
-     * 
-     * @param status    Status indicating if the param was specified
+     * * @todo defaul condition.
+     * * @param status    Status indicating if the param was specified
      * @param _sdf      A pointer to the model's SDF description
      * @param param     The name of the parameter being located
-     * 
-     */
-    Eigen::Matrix6d GetSdfMatrix(bool* status, sdf::ElementPtr _sdf, std::string param, Eigen::Matrix6d def=Eigen::Matrix6d::Zero());
+     * */
+    Eigen::Matrix6d GetSdfMatrix(bool* status, std::shared_ptr<const sdf::Element> _sdf, std::string param, Eigen::Matrix6d def=Eigen::Matrix6d::Zero());
 
 }
 

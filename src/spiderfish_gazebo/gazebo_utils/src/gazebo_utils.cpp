@@ -1,9 +1,11 @@
 #include "include/gazebo_utils.hpp"
+#include <sstream>
+#include <gz/common/Console.hh>
 
 namespace spiderfish_gazebo
 {
     
-    Eigen::Vector6d GetSdfVector(bool* status, sdf::ElementPtr _sdf, std::string param, Eigen::Vector6d def)
+    Eigen::Vector6d GetSdfVector(bool* status, std::shared_ptr<const sdf::Element> _sdf, std::string param, Eigen::Vector6d def)
     {
         Eigen::Vector6d _vector = def;
         int idx = 0;
@@ -21,7 +23,7 @@ namespace spiderfish_gazebo
 
         while (iss >> val)
         {
-            _vector(idx++, 1) = val;
+            _vector(idx++) = val;
         }
         if (idx != MAX_DIMENSION) 
         {
@@ -34,7 +36,7 @@ namespace spiderfish_gazebo
     }
 
 
-    Eigen::Matrix6d GetSdfMatrix(bool* status, sdf::ElementPtr _sdf, std::string param, Eigen::Matrix6d def)
+    Eigen::Matrix6d GetSdfMatrix(bool* status, std::shared_ptr<const sdf::Element> _sdf, std::string param, Eigen::Matrix6d def)
     {
         Eigen::Matrix6d _matrix;
         int r_idx = 0, c_idx = 0;

@@ -47,14 +47,18 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            # Clock (Simulation Time)
             '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
-            # IMU
             '/spiderfish/drivers/imu@sensor_msgs/msg/Imu[gz.msgs.IMU',
-            # Down Camera
-            '/spiderfish/drivers/down_camera/image_raw@sensor_msgs/msg/Image[gz.msgs.Image',
-            # Front Depth Camera
-            '/spiderfish/drivers/front_camera/depth/image_raw@sensor_msgs/msg/Image[gz.msgs.Image'
+        ],
+        output='screen'
+    )
+
+    ros_gz_image_bridge = Node(
+        package='ros_gz_image',
+        executable='image_bridge',
+        arguments=[
+            '/spiderfish/drivers/down_camera/image_raw',
+            '/spiderfish/drivers/front_camera/depth/image_raw'
         ],
         output='screen'
     )
@@ -63,4 +67,5 @@ def generate_launch_description():
     ld.add_action(add_model_path)
     ld.add_action(gz_sim)
     ld.add_action(ros_gz_bridge)
+    ld.add_action(ros_gz_image_bridge)
     return ld

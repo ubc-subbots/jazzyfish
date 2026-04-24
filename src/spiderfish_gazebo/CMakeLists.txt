@@ -35,6 +35,8 @@ find_package(cv_bridge REQUIRED)
 find_package(spiderfish_interfaces REQUIRED)
 
 include_directories(include)
+include_directories(gazebo_utils)
+include_directories(math_utils)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 
@@ -78,6 +80,23 @@ ament_target_dependencies(actuators_command_simulation
   "ament_index_cpp"
 )
 install(TARGETS actuators_command_simulation DESTINATION lib/${PROJECT_NAME})
+
+
+# Hydrodynamics plugin
+add_library(hydrodynamics_plugin SHARED
+  src/hydrodynamics_plugin.cpp
+  gazebo_utils/src/gazebo_utils.cpp
+  math_utils/src/math_utils.cpp
+)
+target_include_directories(hydrodynamics_plugin PUBLIC include gazebo_utils math_utils)
+ament_target_dependencies(hydrodynamics_plugin "ros_gz_sim")
+ament_export_libraries(hydrodynamics_plugin)
+target_link_libraries(hydrodynamics_plugin gz-sim8::gz-sim8 gz-plugin2::gz-plugin2)
+install(TARGETS hydrodynamics_plugin
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
 
 
 # Underwater Camera Executable - DEPRECATED (FROM GAZEBO CLASSIC)
@@ -144,23 +163,6 @@ install(TARGETS actuators_command_simulation DESTINATION lib/${PROJECT_NAME})
 # ament_export_libraries(smooth_camera_plugin)
 # target_link_libraries(smooth_camera_plugin gz-sim8::gz-sim8 gz-plugin2::gz-plugin2)
 # install(TARGETS smooth_camera_plugin
-#   ARCHIVE DESTINATION lib
-#   LIBRARY DESTINATION lib
-#   RUNTIME DESTINATION bin
-# )
-
-
-# Hydrodynamics Plugin - DEPRECATED (FROM GAZEBO CLASSIC)
-# add_library(hydrodynamics_plugin SHARED
-#   src/hydrodynamics_plugin.cpp
-#   gazebo_utils/src/gazebo_utils.cpp
-#   math_utils/src/math_utils.cpp
-# )
-# target_include_directories(hydrodynamics_plugin PUBLIC include gazebo_utils math_utils)
-# ament_target_dependencies(hydrodynamics_plugin "ros_gz_sim")
-# ament_export_libraries(hydrodynamics_plugin)
-# target_link_libraries(hydrodynamics_plugin gz-sim8::gz-sim8 gz-plugin2::gz-plugin2)
-# install(TARGETS hydrodynamics_plugin
 #   ARCHIVE DESTINATION lib
 #   LIBRARY DESTINATION lib
 #   RUNTIME DESTINATION bin

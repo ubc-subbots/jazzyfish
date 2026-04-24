@@ -4,25 +4,16 @@
     <link name='base_link'>
 
       <inertial>
-        <mass>13.7</mass>
+        <mass>32.9</mass>
         <inertia>
-          <ixx> 0.548853532</ixx>
-          <ixy> 0.000990367</ixy>
-          <ixz> 0.007434770</ixz>
-          <iyy> 0.725638212</iyy>
-          <iyz> 0.045963196</iyz>
-          <izz> 1.077000000</izz>
+          <ixx>1.088853532</ixx>
+          <ixy>0.000990367</ixy>
+          <ixz>0.007434770</ixz>
+          <iyy>1.025638212</iyy>
+          <iyz>0.045963196</iyz>
+          <izz>1.507000000</izz>
         </inertia>
         <pose>0.1 -0.062 -0.00878 0 0 0</pose>
-
-        <!-- <fluid_added_mass>
-          <xx>6.150</xx>
-          <yy>19.301</yy>
-          <zz>32.152</zz>
-          <pp>0.542</pp>
-          <qq>0.304</qq>
-          <rr>0.429</rr>
-        </fluid_added_mass> -->
       </inertial>
 
       <visual name='visual'>

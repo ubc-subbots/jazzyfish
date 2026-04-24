@@ -127,6 +127,7 @@ namespace spiderfish_gazebo
             return;
         }
 
+        std::lock_guard<std::mutex> lock(this->thrust_mutex);
         for (unsigned int i = 0; i < this->thruster_count; i++)
         {
             this->thrust_values[i] = joint_cmd->data[i];
@@ -139,12 +140,18 @@ namespace spiderfish_gazebo
 
         for (unsigned int i = 0; i < this->thruster.size(); i++)
         {
-            gz::math::Vector3d local_force(0, 0, this->thrust_values[i]);
+            double current_thrust = 0.0;
+            {
+                std::lock_guard<std::mutex> lock(this->thrust_mutex);
+                current_thrust = this->thrust_values[i];
+            }
+
+            gz::math::Vector3d local_force(0, 0, current_thrust);
             
             std::optional<gz::math::Pose3d> pose = this->thruster[i].WorldPose(_ecm);
             if (pose.has_value()) {
                 gz::math::Vector3d world_force = pose.value().Rot() * local_force;
-                this->thruster[i].AddWorldForce(_ecm, world_force);
+                this->thruster[i].AddWorldWrench(_ecm, world_force, gz::math::Vector3d::Zero);
             }
         }
     }
