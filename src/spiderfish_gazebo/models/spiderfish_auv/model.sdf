@@ -163,7 +163,7 @@
       <base_link>base_link</base_link>
       <neutrally_buoyant>1</neutrally_buoyant>
       <volume>0.1334</volume>
-      <center_of_buoyancy>0.095 -0.062 -0.0</center_of_buoyancy>
+      <center_of_buoyancy>0.0975 -0.062 -0.0</center_of_buoyancy>
       <hydrodynamic_model>
           <!-- Useful params for controls simplifications-->
           <scalingBuoyancy>0.93</scalingBuoyancy>

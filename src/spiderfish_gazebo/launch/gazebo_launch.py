@@ -48,7 +48,12 @@ def generate_launch_description():
         executable='parameter_bridge',
         arguments=[
             '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
-            '/spiderfish/drivers/imu@sensor_msgs/msg/Imu[gz.msgs.IMU',
+            '/imu@sensor_msgs/msg/Imu[gz.msgs.IMU',
+            '/spiderfish/drivers/front_camera/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
+
+        ],
+        remappings=[
+            ('/imu', '/spiderfish/drivers/imu') 
         ],
         output='screen'
     )
@@ -57,8 +62,13 @@ def generate_launch_description():
         package='ros_gz_image',
         executable='image_bridge',
         arguments=[
-            '/spiderfish/drivers/down_camera/image_raw',
-            '/spiderfish/drivers/front_camera/depth/image_raw'
+            '/spiderfish/drivers/front_camera/image',
+            '/spiderfish/drivers/front_camera/depth_image',
+            '/spiderfish/drivers/down_camera',
+        ],
+        remappings=[
+            ('/spiderfish/drivers/front_camera/image', '/spiderfish/drivers/front_camera/image_raw'),
+            ('/spiderfish/drivers/front_camera/depth_image', '/spiderfish/drivers/front_camera/depth/image_raw')
         ],
         output='screen'
     )

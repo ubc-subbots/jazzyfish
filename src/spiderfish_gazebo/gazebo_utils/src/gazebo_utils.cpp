@@ -38,6 +38,7 @@ namespace spiderfish_gazebo
 
     Eigen::Matrix6d GetSdfMatrix(bool* status, std::shared_ptr<const sdf::Element> _sdf, std::string param, Eigen::Matrix6d def)
     {
+        (void) def;
         Eigen::Matrix6d _matrix;
         int r_idx = 0, c_idx = 0;
         double val;
