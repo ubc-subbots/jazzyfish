@@ -1,3 +1,5 @@
+# This was an attempt to port spiderfish to ubuntu 24.04. It is now archived as we move onto 26.04.
+
 # Spiderfish AUV
 
 This repository contains the ROS2 system for the UBC SubBots Spiderfish AUV. It is meant to be launched in Ubuntu 20.04 on the Jetson TX2 on board the Spiderfish AUV.
